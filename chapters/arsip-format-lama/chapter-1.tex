@@ -1,0 +1,97 @@
+\newpage
+\chapter{PENDAHULUAN} \label{Bab I}
+% \isi{...} = data yang masih harus ditanyakan ke sekolah (tampil tebal dalam kurung siku).
+\providecommand{\isi}[1]{\textbf{[#1]}}
+
+
+\section{Latar Belakang}
+Surat Keterangan Lulus (SKL) adalah dokumen yang diterbitkan kepala sekolah menengah atas (SMA) pada tanggal penetapan kelulusan dan berlaku sementara sampai ijazah diterbitkan~\cite{Kepmendikdasmen2026SKL}. SKL memuat paling sedikit identitas peserta didik dan nilai ujian sekolah~\cite{Kepmendikdasmen2026SKL}, sehingga datanya termasuk data pribadi anak yang dilindungi Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi~\cite{UU27Tahun2022}. Keaslian dokumen pendidikan di Indonesia masih menjadi persoalan karena sulit dibuktikan secara forensik~\cite{Zainuddin2025Ijazah}, sementara dokumen berbasis kertas rentan dipalsukan dan verifikasinya memakan waktu~\cite{Tariq2023Cerberus,AlHemairy2024UAE}. Penelitian ini berfokus pada SKL di SMA karena dokumen ini menjadi satu-satunya bukti kelulusan resmi sebelum ijazah terbit.
+
+Observasi di SMAN 1 Gadingrejo, Kabupaten Pringsewu, Lampung, pada 14 September dan 2 Oktober 2026 menunjukkan bahwa ijazah sudah diterbitkan melalui sistem digital dari dinas dengan \textit{QR code} verifikasi, sedangkan SKL masih dibuat secara manual. SKL disusun staf tata usaha, dicetak, lalu ditandatangani dan diberi stempel basah, kemudian arsipnya disimpan sebagai berkas fisik di lemari arsip ruang tata usaha. Pihak luar yang ingin memastikan keaslian SKL harus menghubungi atau datang ke sekolah, lalu staf tata usaha mencari arsip fisik tersebut secara manual.
+
+Hasil observasi tersebut dikonfirmasi melalui wawancara dengan kepala tata usaha, staf tata usaha, dan wakil kepala sekolah bidang kurikulum. Penyusunan SKL melibatkan dua staf tata usaha yang menginputkan identitas dan nilai siswa, kepala tata usaha sebagai koordinator, wakil kepala sekolah bidang kurikulum yang menyetujui, serta kepala sekolah yang menyetujui dan menandatangani SKL. Untuk sekitar 396 siswa per angkatan, penyusunan SKL dan transkrip nilai memerlukan sekitar dua hari kerja oleh dua staf apabila nilai masuk tepat waktu, ditambah satu hari pencetakan oleh dua orang. Dengan asumsi delapan jam kerja per hari, beban tersebut setara dengan sekitar 48 jam kerja orang, atau sekitar 7 menit untuk setiap siswa. Setiap permintaan verifikasi dari pihak luar harus dilayani secara manual dengan mencari arsip fisik, dan sekolah tidak memiliki catatan jumlah permintaan verifikasi maupun jumlah SKL yang dicetak ulang akibat kesalahan input, sehingga beban dan frekuensi kesalahan tersebut tidak dapat dipantau. Sekolah juga menyampaikan bahwa baru-baru ini pernah terjadi satu kali pemalsuan SKL berupa perubahan identitas dan nilai, meskipun tahun kejadian, kronologi, dan cara sekolah mengetahuinya tidak diungkapkan.
+
+SKL diterima siswa saat pembagian rapor semester terakhir dan berlaku sekitar satu sampai dua bulan sampai ijazah terbit. Dalam rentang itu, SKL dipakai untuk mendaftar ke perguruan tinggi, sekolah kedinasan, dan melamar pekerjaan, sehingga pemalsuan atau kesalahan isi SKL dapat merugikan lulusan maupun lembaga penerima. Kejadian pemalsuan identitas dan nilai di sekolah mitra menunjukkan bahwa risiko tersebut nyata, sedangkan arsip fisik tanpa cadangan membuat sekolah sulit membuktikan bahwa data SKL tidak pernah diubah. Persoalan ini termasuk ranah keamanan informasi, yaitu integritas data, otorisasi, dan jejak audit.
+
+Alternatif yang mungkin diajukan untuk masalah tersebut adalah digitalisasi SKL menggunakan \textit{database} terpusat yang dilengkapi \textit{audit log} dan tanda tangan digital, tetapi ketiganya belum cukup untuk permasalahan SKL. Pertama, \textit{database} dan \textit{audit log} dikelola oleh pihak yang sama, sehingga pengguna dengan hak administrator dapat mengubah data sekaligus catatan lognya tanpa terdeteksi oleh pengamanan konvensional~\cite{Hafis2026Insider}. Kedua, tanda tangan digital hanya membuktikan siapa penandatangan dan bahwa satu berkas tidak berubah sejak ditandatangani, tanda tangan tersebut tidak mencatat status terkini SKL, misalnya sudah dicabut atau diganti, dan tidak memaksa urutan persetujuan antarpejabat, sehingga penelitian terdahulu tetap memadukan tanda tangan dengan blockchain untuk mencatat status kredensial~\cite{AlHemairy2024UAE}. Ketiga, SKL tercetak tetap membutuhkan rujukan daring untuk diverifikasi, jika rujukan itu hanya satu server sekolah, kepercayaan terhadap hasil verifikasi kembali bergantung pada server dan administratornya. Blockchain menutup ketiga kekurangan tersebut karena setiap persetujuan ditandatangani dengan kunci privat milik pejabat yang bersangkutan~\cite{FabricMSP}, setiap blok terkait dengan blok sebelumnya melalui \textit{hash}, dan salinan \textit{ledger} tersimpan pada beberapa \textit{node}~\cite{Rustemi2023SLR}. Akibatnya, perubahan diam-diam, termasuk oleh administrator, dapat terdeteksi, dan salinan \textit{ledger} sekaligus menjadi cadangan catatan SKL. Blockchain tetap diposisikan sebagai lapisan kepercayaan tambahan, bukan pengganti prosedur sekolah~\cite{Pandari2026Blockchain}. Oleh karena itu, penelitian ini tidak menggunakan tanda tangan digital; SKL tetap ditandatangani dan distempel basah oleh kepala sekolah, sedangkan keasliannya dapat diverifikasi secara daring melalui \textit{QR code} yang merujuk ke catatan di blockchain.
+
+Jenis yang dipilih adalah \textit{permissioned blockchain} Hyperledger Fabric karena seluruh pihak berada di lingkungan sekolah dan dikenal identitasnya, data pribadi siswa dapat dipisahkan dari \textit{ledger}, dan platform ini telah diterapkan untuk dokumen akademik~\cite{Blanco2025Digital,Dash2025Hyperledger}. Mekanisme multi-otoritas yang digunakan adalah persetujuan berurutan (\textit{sequential approval}) untuk penerbitan dan persetujuan ambang (\textit{threshold approval}) untuk pencabutan. Pada persetujuan berurutan, SKL baru berstatus terbit setelah melewati input staf tata usaha, verifikasi kepala tata usaha, persetujuan wakil kepala sekolah bidang kurikulum, dan persetujuan kepala sekolah secara berurutan, karena prosedur penerbitan SKL di sekolah memang bertingkat dan setiap tingkat memeriksa hal yang berbeda. Mekanisme \textit{multi-signature}, yaitu beberapa tanda tangan pada satu transaksi seperti pada Al Hemairy dkk.~\cite{AlHemairy2024UAE}, tidak dipilih karena tidak menegakkan urutan pemeriksaan dan mengharuskan tanda tangan semua pejabat dikumpulkan di luar jaringan sebelum dikirim sebagai satu transaksi. Untuk pencabutan, digunakan persetujuan ambang minimal dua dari tiga pejabat, yaitu kepala tata usaha, wakil kepala sekolah bidang kurikulum, dan kepala sekolah, mengikuti pola pencabutan oleh minimal dua otoritas pada Tariq dkk.~\cite{Tariq2023Cerberus}, agar pencabutan tidak dapat dilakukan sepihak tetapi tetap dapat dilakukan saat salah satu pejabat berhalangan.
+
+Blockchain hanya menjamin bahwa catatan tidak berubah setelah dicatat, bukan bahwa data yang dicatat sudah benar. Karena itu, kebenaran data SKL dijaga sebelum SKL dinyatakan terbit melalui tiga lapis pemeriksaan. Pertama, \textit{smart contract} memvalidasi data saat diinputkan, yaitu kelengkapan isian, format NISN sepuluh digit, rentang nilai 0--100, kesesuaian kode mata pelajaran dan nilai rata-rata, serta tidak adanya SKL ganda untuk NISN yang sama. Kedua, data yang lolos validasi masih berstatus draf dan harus diperiksa manusia secara bertingkat, kepala tata usaha mencocokkannya dengan leger nilai, lalu wakil kepala sekolah bidang kurikulum dan kepala sekolah menyetujuinya, sehingga satu kesalahan input harus lolos dari tiga pemeriksa sebelum SKL terbit. Ketiga, setiap persetujuan terikat pada nilai \textit{hash} data yang diperiksa, sehingga perubahan data setelah disetujui membatalkan persetujuan dan mengembalikan SKL ke tahap draf. Kesalahan yang baru ditemukan setelah SKL terbit tidak diperbaiki dengan menyunting catatan, tetapi dengan mencabut SKL lama dan menerbitkan SKL pengganti, sehingga riwayat koreksi tetap tercatat~\cite{Hafis2026Insider}.
+
+Hyperledger Fabric mengelola identitas melalui \textit{Membership Service Provider} berbasis sertifikat X.509~\cite{FabricMSP}, dan peran setiap pihak ditanamkan sebagai atribut sertifikat yang diperiksa \textit{chaincode} melalui pustaka \textit{client identity} (cid)~\cite{FabricCID}. Data lengkap siswa disimpan pada \textit{private data collection}, sedangkan \textit{ledger} hanya menyimpan \textit{hash}, status, dan jejak transaksi~\cite{FabricPrivateData}. Penelitian terdahulu sudah memakai Fabric untuk sertifikat akademik, tetapi setiap tindakan masih cukup dilakukan oleh satu peran~\cite{Blanco2025Digital,Dash2025Hyperledger}, sedangkan pola multi-otoritas~\cite{Tariq2023Cerberus,AlHemairy2024UAE} belum menegakkan urutan persetujuan, belum diuji kinerjanya, dan sebagian besar kajian berfokus pada perguruan tinggi~\cite{Rustemi2023SLR,Pandari2026Blockchain}. Kontribusi teknis penelitian ini karena itu tidak sebatas menambahkan empat peran pengguna, tetapi mencakup lima hal: (1) urutan persetujuan ditegakkan sebagai mesin status di dalam \textit{chaincode}, sehingga tahap tidak dapat dilompati atau diulang, (2) pemisahan tugas, yaitu identitas yang menginput tidak dapat menyetujui SKL yang sama dan satu identitas tidak dapat memberi dua persetujuan, (3) setiap persetujuan diikat pada nilai \textit{hash} data, (4) persetujuan berurutan untuk penerbitan digabungkan dengan persetujuan ambang untuk pencabutan, dan (5) \textit{overhead} kinerja mekanisme multi-otoritas diukur terhadap penerbitan oleh satu otoritas.
+
+Hasil rancang bangun dievaluasi dari tiga sisi. Integritas data diuji dengan mengubah isi SKL lalu memastikan nilai \textit{hash}-nya tidak lagi cocok dengan yang tercatat di \textit{ledger}~\cite{Blanco2025Digital}. Kontrol akses dan alur persetujuan diuji dengan \textit{black box testing} teknik \textit{state transition testing}~\cite{Putri2024BlackBox,Augenio2025StateTransition}, yang mencakup akses ilegal, manipulasi urutan persetujuan, transaksi berulang, dan pencabutan tanpa kewenangan. Kinerja jaringan diukur dengan Hyperledger Caliper pada beban sekitar 396 siswa menggunakan metrik \textit{throughput}, \textit{latency}, dan \textit{success rate}~\cite{Caliper}, lalu dibandingkan dengan hasil Dash dkk.~\cite{Dash2025Hyperledger}. Selain itu, skenario penerbitan oleh satu otoritas dibandingkan dengan empat otoritas untuk mengetahui \textit{overhead} mekanisme multi-otoritas.
+
+Penelitian ini merupakan bagian dari penelitian kelompok ``Sistem Verifikasi Dokumen Akademik Siswa pada Sekolah Menengah Atas Berbasis Permissioned Blockchain dan Smart Contract Multi-Otoritas'', dengan bagian penulis berupa jaringan, identitas, dan aturan kewenangan pada \textit{smart contract}, sedangkan aplikasi web, \textit{QR code}, dan portal verifikasi dikerjakan anggota kelompok lain. Bagi sekolah, hasil penelitian ini dapat mengurangi pengecekan manual di arsip fisik dan menyediakan catatan SKL yang tidak dapat diubah diam-diam. Bagi lulusan dan lembaga penerima, keaslian SKL dapat diperiksa tanpa harus menghubungi sekolah.
+
+\section{Rumusan Masalah} \label{I.Rumusan Masalah}
+Berdasarkan latar belakang di atas, rumusan masalah penelitian ini adalah sebagai berikut.
+
+\begin{enumerate}
+    \item Bagaimana merancang dan membangun \textit{permissioned blockchain} dan \textit{smart contract} multi-otoritas menggunakan Hyperledger Fabric untuk mengatur penerbitan SKL sesuai kewenangan staf tata usaha, kepala tata usaha, wakil kepala sekolah bidang kurikulum, dan kepala sekolah di SMAN 1 Gadingrejo?
+    \item Bagaimana hasil pengujian integritas data, kontrol akses dan alur persetujuan menggunakan \textit{black box testing} teknik \textit{state transition testing}, serta kinerja jaringan dan \textit{overhead} mekanisme multi-otoritas menggunakan Hyperledger Caliper pada \textit{smart contract} SKL yang dibangun?
+\end{enumerate}
+
+\section{Tujuan Penelitian} \label{I.Tujuan}
+Tujuan yang ingin dicapai dari penelitian ini adalah sebagai berikut.
+
+\begin{enumerate}
+    \item Menghasilkan rancang bangun \textit{permissioned blockchain} dan \textit{smart contract} multi-otoritas menggunakan Hyperledger Fabric yang mengatur penerbitan SKL sesuai kewenangan staf tata usaha, kepala tata usaha, wakil kepala sekolah bidang kurikulum, dan kepala sekolah di SMAN 1 Gadingrejo.
+    \item Mengetahui hasil pengujian integritas data, kontrol akses dan alur persetujuan menggunakan \textit{black box testing} teknik \textit{state transition testing}, serta kinerja jaringan dan \textit{overhead} mekanisme multi-otoritas menggunakan Hyperledger Caliper pada \textit{smart contract} SKL yang dibangun.
+\end{enumerate}
+
+\section{Batasan Masalah}
+Agar penelitian terarah, batasan masalah ditetapkan sebagai berikut.
+
+\begin{enumerate}
+    \item Platform yang digunakan adalah Hyperledger Fabric versi 2.5.
+    \item Pihak yang dimodelkan adalah staf tata usaha yang hanya menginputkan identitas dan data nilai siswa, kepala tata usaha yang memverifikasi data SKL dan mengatur penomoran surat, wakil kepala sekolah bidang kurikulum yang menyetujui, dan kepala sekolah yang menyetujui serta menandatangani SKL.
+    \item Mekanisme multi-otoritas yang diterapkan adalah persetujuan berurutan untuk penerbitan SKL dan persetujuan ambang minimal dua dari tiga pejabat untuk pencabutan SKL.
+    \item Data lengkap siswa tidak disimpan di \textit{blockchain}. Yang dicatat di \textit{blockchain} adalah ID SKL, nomor surat, \textit{hash}, status, identitas penulis transaksi, dan waktu transaksi.
+    \item Data yang digunakan untuk pengujian adalah data siswa yang telah lulus pada tahun 2026 untuk menyesuaikan format SKL sekolah, dan digunakan atas izin sekolah.
+    \item SKL tetap ditandatangani dan distempel basah oleh kepala sekolah, penelitian ini tidak menggantikan tanda tangan basah dengan tanda tangan elektronik, melainkan menambahkan bukti keaslian yang dapat diverifikasi secara daring.
+    \item Aplikasi web, pembuatan dokumen SKL, \textit{QR code}, dan portal verifikasi berada di luar cakupan penelitian ini karena dikerjakan anggota kelompok lain.
+    \item Sistem yang dihasilkan hanya dapat digunakan dalam keadaan terhubung ke jaringan internet (daring) dan tidak dapat digunakan dalam keadaan luring (\textit{offline}).
+\end{enumerate}
+
+\section{Manfaat Penelitian}
+Penelitian ini diharapkan memberikan manfaat bagi pihak-pihak berikut.
+
+\textbf{Bagi Mahasiswa}
+
+Penelitian ini menjadi sarana bagi penulis untuk menerapkan ilmu Teknik Informatika dalam membangun jaringan \textit{permissioned blockchain}, mengembangkan \textit{smart contract}, dan melakukan pengujian sistem berdasarkan masalah nyata di sekolah.\par
+
+\textbf{Bagi SMAN 1 Gadingrejo}
+
+Penelitian ini menghasilkan prototipe yang dapat mengurangi pengecekan manual di arsip fisik, menyediakan catatan SKL yang tersimpan sebagai cadangan, dan memastikan setiap tahap penerbitan SKL hanya dilakukan oleh pihak yang berwenang.\par
+
+\textbf{Bagi Lulusan dan Lembaga Penerima SKL}
+
+Lulusan memperoleh SKL yang keasliannya dapat diperiksa, sedangkan perguruan tinggi, sekolah kedinasan, dan lembaga penerima lainnya dapat memastikan keaslian SKL tanpa harus menghubungi atau datang ke sekolah.\par
+
+\textbf{Bagi Peneliti Selanjutnya}
+
+Hasil rancang bangun dan pengujian penelitian ini dapat menjadi acuan dan pembanding bagi penelitian sejenis, misalnya penerapan pada dokumen akademik lain atau pengembangan jaringan yang melibatkan lebih dari satu sekolah.\par
+
+\section{Sistematika Penulisan}
+
+\textbf{Bab I Pendahuluan}
+
+Bab I membahas mengenai latar belakang permasalahan, rumusan masalah, tujuan penelitian, batasan masalah, manfaat dari penelitian yang dilakukan, serta sistematika penulisan itu sendiri.\par
+
+\textbf{Bab II Tinjauan Pustaka}
+
+Bab II berisi hasil tinjauan pustaka dari penelitian terdahulu yang relevan dengan penelitian yang dilakukan, dan menjelaskan dasar teori yang mendukung penelitian yang dilakukan.\par
+
+\textbf{Bab III Metode Penelitian}
+
+Bab III berisi penjelasan mengenai alur penelitian, seperti metode, perhitungan, rancangan pengujian, alat dan bahan yang digunakan dalam penelitian.\par
+
+\textbf{Bab IV Hasil dan Pembahasan}
+
+Bab IV berisi penjelasan dari hasil implementasi dari seluruh tahapan yang terdapat pada alur penelitian di Bab III dan pengujian terhadap pemodelan yang akan dibuat.\par
+
+\textbf{Bab V Penutup}
+
+Bab V berisi kesimpulan dari hasil evaluasi penelitian, serta saran yang dapat bermanfaat untuk pengembangan penelitian di masa yang akan datang dengan judul yang berkaitan.\par

@@ -1,0 +1,159 @@
+% !TeX root = thesis.tex
+%--------------------------------------------------------------------%
+%
+% Templat LaTeX Laporan Tugas Akhir Non-Konvensional
+% BENTUK 2: PROYEK KELOMPOK BERSAMA MITRA (CAPSTONE)
+% Program Studi Teknik Informatika ITERA
+%
+% Disusun ulang dari "Templat_Laporan_TA_Bentuk2_Proyek_Capstone" (Word)
+% di atas templat LaTeX TA IF ITERA versi 2026.1 (format UNESCO).
+% Berkas format lama disimpan di chapters/arsip-format-lama/ dan tidak
+% ikut dikompilasi.
+%
+%--------------------------------------------------------------------%
+
+% Ukuran naskah UNESCO 15,5 x 23 cm, Times New Roman 11 pt
+\documentclass[11pt]{report}
+\usepackage[paperwidth=155mm,
+			paperheight=230mm,
+			top=2cm,
+			bottom=2cm,
+			left=2cm,
+			right=2cm,
+			includefoot,
+			heightrounded,
+			bindingoffset=0.5cm]   % margin sisi jilid = 2 + 0,5 = 2,5 cm
+			{geometry}
+
+\input{config/config.sty}   % Konfigurasi templat ITERA
+\input{config/capstone.tex} % Tambahan khusus templat capstone
+
+% TIPS OVERLEAF GRATIS (batas waktu kompilasi):
+% aktifkan baris di bawah agar hanya bab yang sedang dikerjakan yang
+% dikompilasi. Nonaktifkan lagi sebelum mengompilasi dokumen lengkap.
+% \includeonly{chapters/bab-1}
+
+%--------------------------------------------------------------------%
+% SAKLAR PETUNJUK
+% \petunjuktrue  : teks "Petunjuk:", halaman Petunjuk Pengisian, dan
+%                  Peta Kewajiban ditampilkan (saat menulis).
+% \petunjukfalse : semuanya disembunyikan (naskah yang diserahkan).
+%--------------------------------------------------------------------%
+\petunjuktrue
+
+\begin{document}
+
+    %----------------------------------------------------------------%
+    % INFORMASI LAPORAN (ubah di sini, otomatis dipakai di semua halaman)
+    %----------------------------------------------------------------%
+    % Judul Laporan TA individu (maks. 16 kata, beda dari anggota lain)
+    \title{Rancang Bangun Permissioned Blockchain dan Smart Contract Multi-Otoritas untuk Surat Keterangan Lulus (Studi Kasus: SMAN 1 Gadingrejo)}
+    \titleEN{[Judul dalam bahasa Inggris]}
+
+    \author{Doni Agus Setiawan}             % Nama mahasiswa
+    \nim{123140009}                         % NIM
+    \tempatLahir{[Tempat, tanggal lahir]}   % untuk Pernyataan Orisinalitas
+
+    \proyekTim{Sistem Verifikasi Dokumen Akademik Siswa pada Sekolah Menengah Atas Berbasis Permissioned Blockchain dan Smart Contract Multi-Otoritas}
+    \anggotaLain{[Nama dan NIM anggota 2]; [Nama dan NIM anggota 3]; [Nama dan NIM anggota 4]}
+    \namaMitra{SMAN 1 Gadingrejo}
+
+    % Pembimbing (templat capstone: satu pembimbing)
+    \dosbingA{[Nama dan gelar pembimbing]}{NIP. [..................]}
+    % Penguji
+    \pengujiA{[Nama dan gelar penguji 1]}{NIP. [..................]}
+    \pengujiB{[Nama dan gelar penguji 2]}{NIP. [..................]}
+    % Koordinator Program Studi
+    \koordinatorProdi{Andika Setiawan, S.Kom., M.Cs.}{NIP. 19911127 2022 03 1 007}
+
+    \tanggalLaporan{[tanggal]}   % contoh: 20 November 2026
+    \tahunLaporan{2026}
+
+	\sloppy
+    \pagenumbering{roman}
+    \setcounter{page}{1}
+
+	%----------------------------------------------------------------%
+	% HALAMAN AWAL
+	%----------------------------------------------------------------%
+	\input{chapters/cover}            % Sampul
+	\input{chapters/approval}         % Lembar Pengesahan (hal. ii)
+    \clearpage
+	\newgeometry{top=2cm, bottom=2cm, left=2cm, right=2cm,
+		includefoot, heightrounded, bindingoffset=0.5cm,
+		twoside}                      % cetak bolak-balik, margin cermin
+    \pagestyle{capstone}
+	\input{chapters/statement}        % Pernyataan Orisinalitas
+	\input{chapters/ai-statement}     % Pernyataan Penggunaan AI (WAJIB sidang akhir)
+	\ifpetunjuk
+		\input{chapters/petunjuk-pengisian} % dihapus dari naskah final
+		\input{chapters/peta-kewajiban}     % dihapus dari naskah final
+	\fi
+	\input{chapters/forewords}        % Kata Pengantar
+	\input{chapters/abstract-en}      % Abstract
+	\input{chapters/abstract-id}      % Abstrak
+
+    %----------------------------------------------------------------%
+    % DAFTAR
+    %----------------------------------------------------------------%
+	\phantomsection\addcontentsline{toc}{chapter}{DAFTAR ISI}
+	\tableofcontents
+	\thispagestyle{capstone}
+	\clearpage
+	\phantomsection\addcontentsline{toc}{chapter}{DAFTAR TABEL}
+	\listoftables
+	\thispagestyle{capstone}
+	\clearpage
+	\phantomsection\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}
+	\listoffigures
+	\thispagestyle{capstone}
+	\clearpage
+
+    %----------------------------------------------------------------%
+    % ISI LAPORAN
+    %----------------------------------------------------------------%
+    \renewcommand{\chaptername}{BAB}
+    \renewcommand{\thechapter}{\Roman{chapter}}
+    \renewcommand\thesection{\arabic{chapter}.\arabic{section}}
+    \setcounter{page}{1}
+    \pagenumbering{arabic}
+    \justifying
+    \pagestyle{capstone}
+
+    % BAGIAN I. DOKUMEN SEMINAR PROPOSAL
+    \include{chapters/bagian-1}       % halaman pembatas + P.1, P.2, P.3
+
+    % BAGIAN II. LAPORAN PROYEK
+    \include{chapters/bagian-2}       % halaman pembatas
+    \include{chapters/bab-1}          % Masalah Mitra dan Tujuan Proyek
+    \include{chapters/bab-2}          % Analisis dan Perancangan
+    \include{chapters/bab-3}          % Pelaksanaan Proyek       (sidang akhir)
+    \include{chapters/bab-4}          % Implementasi Prototipe
+    \include{chapters/bab-5}          % Pengujian dan Evaluasi   (sidang akhir)
+    \include{chapters/bab-6}          % Penerimaan Mitra         (sidang akhir)
+    \include{chapters/bab-7}          % Kontribusi Individu      (sidang akhir)
+    \include{chapters/bab-8}          % Kesimpulan dan Saran     (sidang akhir)
+    \include{chapters/kerahasiaan}    % Kerahasiaan Data Mitra   (sidang akhir)
+
+	%----------------------------------------------------------------%
+    % DAFTAR PUSTAKA (gaya IEEE, hanya pustaka yang disitasi)
+    %----------------------------------------------------------------%
+    \clearpage
+    \phantomsection\addcontentsline{toc}{chapter}{DAFTAR PUSTAKA}
+    \begingroup
+    \singlespacing                    % spasi 1 untuk daftar pustaka
+    % \nocite{*} menampilkan SEMUA isi references.bib. Dipakai sementara
+    % agar kompilasi tidak error selama bab belum berisi \cite{}. HAPUS
+    % baris ini setelah naskah memakai \cite{} (gaya IEEE hanya memuat
+    % pustaka yang disitasi).
+    \nocite{*}
+    \bibliographystyle{IEEEtran}
+    \bibliography{references}
+    \endgroup
+
+	%----------------------------------------------------------------%
+    % LAMPIRAN
+    %----------------------------------------------------------------%
+    \include{chapters/daftar-lampiran}
+    \include{chapters/lampiran}
+\end{document}
